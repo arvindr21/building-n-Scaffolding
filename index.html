@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Modern UI Build Systems and Scaffolding Tools</title>
+
+		<meta name="description" content="Modern UI Build Systems and Scaffolding Tools">
+		<meta name="author" content="Arvind Ravulavaru">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<!--<link href='http://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'> -->
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<base target="_blank">
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h2>Modern UI Build Systems and Scaffolding Tools</h2>
+					<img src="img/grunt-logo.png" height="149">
+					<img src="img/yeoman-logo.png" height="149"><br/>
+					<img src="img/gulp-logo.png" height="179">
+					<img src="img/slush-logo.png" height="179">
+					<p><small>
+						<a href="http://goo.gl/5CL1mW">http://goo.gl/5CL1mW</a><br/>
+						<a href="http://twitter.com/arvindr21">@arvindr21</a>
+						</small>
+					</p>
+				</section>
+				<section style="text-align:left;">
+					<h3>Contents</h3>
+					<ul>
+						<li>Build Toold</li>
+						<li>Build System in UI</li>
+						<li>Grunt</li>
+						<li>Gulp</li>
+						<li>Scaffolding Tools</li>
+						<li>Yeoman</li>
+						<li>Slush</li>
+					</ul>
+				</section>
+				<section>
+					<h3 style="margin-top:19%">
+						<img src="img/Smart_Work_Vs_Hard_Work.jpg" width="521">
+					</h3>					
+				</section>
+				<section>
+					<h3>
+						Build Tools
+					</h3>
+					<ul>
+						<li><i>Build Tools</i> are programs that automate the creation of executable applications from source code.</li>
+
+						<br/>
+						<li><i>Build Automation</i> is the act of scripting or automating tasks that developers do repeatedly like:
+						<ul>
+							<li>Compiling source code into binary code.</li>
+							<li>Packaging that binary code.</li>
+							<li>Running tests.</li>
+							<li>Deployment to production systems.</li>
+						</ul>
+						</li>
+					</ul>					
+				</section>
+				<section>
+					<h3>Build System in UI</h3>
+					<ul>
+						<li>Strip out comments</li>
+						<li>Strip out debugger statements</li>
+						<li>Automagically add vendor prefixes</li>
+						<li>Concatenate files</li>
+						<li>Minify JS/CSS/HTML</li>
+						<li>Build Source Maps</li>
+						<li>Update file revisions for caching</li>
+						<li>Pre and Post compiling tests</li>						
+						and a bunch more..
+
+					</ul>					
+				</section>
+				<section>
+					<h3>Available Build Systems</h3>
+					<img src="img/grunt-logo.png" height="269"> <br/>
+					<img src="img/gulp-logo.png" height="269"> 
+				</section>
+				<section>
+					<h3>
+						Grunt
+					</h3>					
+						<ul>
+							<li>A JavaScript Task Runner</li>
+							<li>Runs on top of Nodejs</li>
+							<li>Automate Simple tasks</li>
+							<li>Each task can be a plugin/feature or a combination</li>							
+							<li>Configuration before code</li>
+							<li>Open Source and Supported by Community</li>
+													
+						</ul>
+				</section>
+				<section>
+					<h3>
+						Setup Grunt
+					</h3>
+					<pre><code>
+$ [sudo] npm install -g grunt-cli
+					</code></pre>
+					<ul>
+						<li>
+							Create a package.json	
+						</li>
+						<li>
+							Create a gruntFile.js
+						</li>
+						<li>
+							Install and save required plugins 
+						</li>
+						<li>
+							Configure the tasks and run
+						</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Sample Config</h3>
+					<h5>package.json</h5>
+					<pre><code>
+{
+  "name": "myGruntApp",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "license": "MIT"
+}
+
+					</code></pre>
+					<h5>Grunt File</h5>	
+					<pre><code>
+module.exports = function (grunt) {
+  grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json')
+  });
+};
+					</code></pre>
+				</section>
+				<section>
+					<h3>Plugins</h3>
+					<ul>
+						<li>Concat</li>
+						<li>Minify</li>
+						<li>qUnit</li>
+						<li>jsHint</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Concat Config</h3>
+					<pre><code>
+concat: {
+  options: {
+    // define a string to put between each file in the
+    // concatenated output
+    separator: ';'
+  },
+  dist: {
+    // the files to concatenate
+    src: ['src/**/*.js'],
+    // the location of the resulting JS file
+    dest: 'dist/<%= pkg.name %>.js'
+  }
+}					
+					</code></pre>
+				</section>
+					<section>
+					<h3>Uglify Config</h3>
+					<pre><code>
+uglify: {
+  options: {
+    // the banner is inserted at the top of the output
+    banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+  },
+  dist: {
+    files: {
+      'dist/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
+    }
+  }
+}
+					</code></pre>
+					</section>
+					<section>
+					<h3>qUnit Config</h3>
+					<pre><code>
+qunit: {
+  files: ['test/**/*.html']
+},
+					</code></pre>
+					</section>
+					<section>
+					<h3>jsHint Config</h3>
+					<pre><code>
+jshint: {
+  // define the files to lint
+  files: ['gruntfile.js', 'src/**/*.js', 'test/**/*.js'],
+  // configure JSHint (documented at http://www.jshint.com/docs/)
+  options: {
+    // more options here if you want to override JSHint defaults
+    globals: {
+      jQuery: true,
+      console: true,
+      module: true
+    }
+  }
+}
+					</code></pre>
+					</section>
+					<section>
+					<h3>Import Tasks</h3>
+					<pre><code>
+grunt.loadNpmTasks('grunt-contrib-uglify');
+grunt.loadNpmTasks('grunt-contrib-jshint');
+grunt.loadNpmTasks('grunt-contrib-qunit');
+grunt.loadNpmTasks('grunt-contrib-watch');
+grunt.loadNpmTasks('grunt-contrib-concat');
+					</code></pre>
+					</section>
+					<section>
+					<h3>Import Tasks</h3>
+					<pre><code>
+// this would be run by typing "grunt test" on the command line
+grunt.registerTask('test', ['jshint', 'qunit']);
+
+// the default task can be run just by typing "grunt" on the command line
+grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
+					</code></pre><br/><br/>
+					<h3>
+					<a href="http://thejackalofjavascript.com/less-bootstrap-boilerplate">Demo</a>
+					</h3>
+					</section>
+				<section>
+					<h3>Gulp</h3>
+					<ul>
+					<li>
+						A Node.js-based task runner.
+					</li>
+					<li>
+						Build to counter issues with Grunt						
+					</li>					
+					<li>
+						Gulp uses leaner, simpler JavaScript code  
+					</li>
+					<li>
+					Gulp plug-ins are designed to do one thing only, unlike Grunt
+					</li>
+					<li>
+					Gulp uses Streams
+					</li>
+					</ul>
+				</section>		
+				<section data-background="img/streams.gif">
+					<h3>Streams
+					</h3>
+					<br/><br/>
+					<p>
+						Think about a stream where you start reading a file, apply operation to it and save it back to disk.
+					</p>
+				</section>
+				<section>
+					<img src="img/stream.png" style="margin-top:19%;" />
+				</section>			
+				<section>
+					<h3>Grunt vs Gulp</h3>
+					<table>
+						<tr><td colspan="2"><br/></td></tr>
+						<tr>
+							<td>
+								Grunt plug-ins often perform multiple tasks
+							</td>
+							<td>
+								Gulp plug-ins are designed to do one thing only.
+							</td>
+						</tr>	
+						<tr><td colspan="2"><br/></td></tr>
+						<tr>
+							<td>
+								Grunt requires plug-ins for basic functionality such as file watching
+							</td>
+							<td>
+								Gulp has them built-in.
+							</td>
+						</tr>
+						<tr><td colspan="2"><br/></td></tr>	
+						<tr>
+							<td>
+								Grunt uses JSON-like data configuration files
+							</td>
+							<td>
+								Gulp uses leaner, simpler JavaScript code.
+							</td>
+						</tr>						
+					</table>
+				</section>
+				<section>
+					<h3>Sample Config</h3>
+					<h5>package.json</h5>
+					<pre><code>
+{
+  "name": "myGulpApp",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "license": "MIT"
+}
+
+					</code></pre>
+					<h5>Gulp File</h5>	
+					<pre><code>
+var gulp = require('gulp');
+
+gulp.task('default', function() {
+  // place code for your default task here
+});
+					</code></pre>
+				</section>
+				<section>
+					<h3>Plugins</h3>
+					<ul>
+						<li>Concat</li>
+						<li>Minify</li>
+						<li>qUnit</li>
+						<li>jsHint</li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Concat Config</h3>
+					<pre><code>
+var concat = require('gulp-concat');
+
+gulp.task('scripts', function() {
+  gulp.src('./lib/*.js')
+    .pipe(concat('all.js'))
+    .pipe(gulp.dest('./dist/'))
+});				
+					</code></pre>
+				</section>
+					<section>
+					<h3>Uglify Config</h3>
+					<pre><code>
+var uglify = require('gulp-uglify');
+
+gulp.task('compress', function() {
+  gulp.src('lib/*.js')
+    .pipe(uglify())
+    .pipe(gulp.dest('dist'))
+});					</code></pre>
+					</section>
+					<section>
+					<h3>qUnit Config</h3>
+					<pre><code>
+var qunit = require('gulp-qunit');
+
+gulp.task('test', function() {
+    return gulp.src('./qunit/test-runner.html')
+        .pipe(qunit());
+});
+					</code></pre>
+					</section>
+					<section>
+					<h3>jsHint Config</h3>
+					<pre><code>
+var jshint = require('gulp-jshint');
+
+gulp.task('lint', function() {
+  return gulp.src('./lib/*.js')
+    .pipe(jshint())
+    .pipe(jshint.reporter('default'));
+});
+					</code></pre>
+					</section>
+					<section>
+					<h3 style="margin-top:21%;"><a href="http://thejackalofjavascript.com/less-bootstrap-boilerplate">Demo</a></h3>					
+					</section>
+
+					<section>
+					<h3>Scaffolding Tools</h3>
+					<h4>Best Practices - Out of Box</h4>					
+					<img src="img/yeoman-logo.png" height="229"> <br/>
+					<img src="img/slush-logo.png" height="229"> 
+				</section>
+				<section>
+					<h3>Yeoman</h3>
+					<ul>
+					<li>Yo<br/>
+					yo scaffolds out a new application, writing your Grunt configuration and pulling in relevant Grunt tasks and Bower dependencies that you might need for your build.</li>
+					<li>Grunt<br/>
+					The Build System is used to build, preview and test your project. Grunt and Gulp are two popular options</li>
+					<li>Bower<br/>
+					The Package Manager is used for dependency management, so that you no longer have to manually download and manage your scripts. Bower and npm are two popular options.</li>
+					</ul>
+				</section>
+				<section>
+					<h3 style="margin-top:21%">
+						<a href="http://yeoman.io/codelab.html">Demo</a>
+					</h3>				
+				</section>
+				<section>
+					<h3>Slush</h3><br/>
+					<ul><li>
+					Slush is a scaffolding tool, i.e. a tool to help you generate new project structures to get you up and running with your new project in a matter of seconds.</p>
+					</li><li>
+					Slush does not contain anything "out of the box", except the ability to locate installed slush generators and to run them with liftoff.</li></ul>
+				</section>
+				<section>
+					<h3 style="margin-top:21%">
+						<a href="http://slushjs.github.io/#/">Demo</a>
+					</h3>				
+				</section>
+				<section>
+					<h3 style="margin-top:21%">
+						Thanks!
+					</h3>	
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme || 'blood', // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'cube', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
